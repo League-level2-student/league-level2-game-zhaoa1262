@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -21,11 +24,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	
 	Timer frameDraw;
 
+	public static BufferedImage background;
+	
+	Launcher launcher = new Launcher(225, 615, 50, 50);
+	
 	GamePanel() {
 		titleFont = new Font("Font", Font.BOLD, 48);
 		frameDraw = new Timer(1000/60,this);
 	    frameDraw.start();
 
+	    try {
+			background = ImageIO.read(this.getClass().getResourceAsStream("Background.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	void updateMenuState() {
@@ -52,7 +65,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 
 	void drawGameState(Graphics g) {
 		g.setColor(new Color(120, 212, 222));
-		g.fillRect(0, 0, ShootTheBrusselSprout.WIDTH, ShootTheBrusselSprout.HEIGHT);
+		g.drawImage(background, 0, 0, ShootTheBrusselSprout.WIDTH, ShootTheBrusselSprout.HEIGHT, null);
+		launcher.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
@@ -102,11 +116,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		}   		
 		
 		if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
-			   System.out.println("right");
+			if (launcher.x <= 450) {
+
+				launcher.right();
+			}
 		}
 		
 		if (e.getKeyCode()==KeyEvent.VK_LEFT) {
-			System.out.println("left");
+			if (launcher.x >= 0) {
+
+				launcher.left();
+			}
 			   
 		}
 	}
