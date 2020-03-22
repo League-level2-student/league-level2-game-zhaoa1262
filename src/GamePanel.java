@@ -12,28 +12,27 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class GamePanel extends JPanel implements ActionListener, KeyListener{
+public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	final int MENU = 0;
 	final int GAME = 1;
 	final int END = 2;
-	
+
 	int currentState = MENU;
-	
 	Font titleFont;
-	
 	Timer frameDraw;
 
 	public static BufferedImage background;
-	
-	Launcher launcher = new Launcher(225, 615, 50, 50);
-	
+
+	Launcher launcher = new Launcher(225, 525, 125, 225);
+	ObjectManager objectManager = new ObjectManager(launcher);
+
 	GamePanel() {
 		titleFont = new Font("Font", Font.BOLD, 48);
-		frameDraw = new Timer(1000/60,this);
-	    frameDraw.start();
+		frameDraw = new Timer(1000 / 60, this);
+		frameDraw.start();
 
-	    try {
+		try {
 			background = ImageIO.read(this.getClass().getResourceAsStream("Background.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -46,7 +45,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	}
 
 	void updateGameState() {
-
+		objectManager.update();
+		if (launcher.isActive == false) {
+			currentState = END;
+		}
 	}
 
 	void updateEndState() {
@@ -56,7 +58,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	void drawMenuState(Graphics g) {
 		g.setColor(new Color(134, 209, 35));
 		g.fillRect(0, 0, ShootTheBrusselSprout.WIDTH, ShootTheBrusselSprout.HEIGHT);
-		
+
 		g.setFont(titleFont);
 		g.setColor(new Color(80, 46, 61));
 		g.drawString("Shoot the ", 125, 300);
@@ -66,22 +68,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	void drawGameState(Graphics g) {
 		g.setColor(new Color(120, 212, 222));
 		g.drawImage(background, 0, 0, ShootTheBrusselSprout.WIDTH, ShootTheBrusselSprout.HEIGHT, null);
-		launcher.draw(g);
+		objectManager.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
 		g.setColor(new Color(222, 120, 120));
 		g.fillRect(0, 0, ShootTheBrusselSprout.WIDTH, ShootTheBrusselSprout.HEIGHT);
-		
+
 		g.setFont(titleFont);
 		g.setColor(new Color(80, 46, 61));
 		g.drawString("You died.", 130, 400);
-		
+
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-		
+
 		if (currentState == MENU) {
 			drawMenuState(g);
 		}
@@ -98,56 +100,65 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
-		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
-		    if (currentState == END) {
-		        currentState = MENU;
-		        
-		    } 
-		    else {
-		        currentState++;
-		    }
-		}   		
-		
-		if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
-			if (launcher.x <= 450) {
 
-				launcher.right();
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+			if (currentState == END) {
+
+				currentState = MENU;
+			}
+
+			else {
+				currentState++;
+
+			}
+
+		}
+
+		if (currentState == GAME) {
+
+			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+				objectManager.addBullet(launcher.getBullet());
+
 			}
 		}
-		
-		if (e.getKeyCode()==KeyEvent.VK_LEFT) {
+
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			if (launcher.x >= 0) {
 
 				launcher.left();
 			}
-			   
+		}
+
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			if (launcher.x <= 400) {
+
+				launcher.right();
+			}
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(currentState == MENU){
-		    updateMenuState();
-		}
-		else if(currentState == GAME){
-		    updateGameState();
-		}
-		else if(currentState == END){
-		    updateEndState();
+		if (currentState == MENU) {
+			updateMenuState();
+		} else if (currentState == GAME) {
+			updateGameState();
+		} else if (currentState == END) {
+			updateEndState();
 		}
 		repaint();
 	}
