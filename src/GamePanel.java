@@ -24,8 +24,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	public static BufferedImage background;
 
-	Launcher launcher = new Launcher(225, 525, 125, 225);
+	Launcher launcher = new Launcher(300, 400, 125, 225);
 	ObjectManager objectManager = new ObjectManager(launcher);
+
+	Timer sproutSpawn;
 
 	GamePanel() {
 		titleFont = new Font("Font", Font.BOLD, 48);
@@ -61,8 +63,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		g.setFont(titleFont);
 		g.setColor(new Color(80, 46, 61));
-		g.drawString("Shoot the ", 125, 300);
-		g.drawString("Brussels Sprout", 55, 500);
+		g.drawString("Shoot the ", 275, 200);
+		g.drawString("Brussels Sprout", 200, 400);
 	}
 
 	void drawGameState(Graphics g) {
@@ -78,6 +80,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setFont(titleFont);
 		g.setColor(new Color(80, 46, 61));
 		g.drawString("You died.", 130, 400);
+
+	}
+
+	void startGame() {
+		sproutSpawn = new Timer(4500, objectManager);
+		sproutSpawn.start();
 
 	}
 
@@ -107,19 +115,34 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+		
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (currentState == END) {
+					sproutSpawn.stop();
+					launcher = new Launcher(300, 500, 50, 50);
+					objectManager = new ObjectManager(launcher);
 
-			if (currentState == END) {
+					currentState = MENU;
+				}
 
-				currentState = MENU;
+				else {
+					currentState++;
+
+				}
+				if (currentState == GAME) {
+					startGame();
+				}
+			}
+			
+
+			if (currentState == GAME) {
+
+				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+					objectManager.addBullet(launcher.getBullet());
+
+				}
 			}
 
-			else {
-				currentState++;
-
-			}
-
-		}
 
 		if (currentState == GAME) {
 
@@ -137,7 +160,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if (launcher.x <= 400) {
+			if (launcher.x <= 700) {
 
 				launcher.right();
 			}

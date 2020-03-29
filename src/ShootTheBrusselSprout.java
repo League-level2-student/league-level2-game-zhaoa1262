@@ -19,8 +19,8 @@ public class ShootTheBrusselSprout {
 	JFrame frame;
 	GamePanel GamePanel;
 	
-	public static final int WIDTH = 500;
-	public static final int HEIGHT = 800;
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
 	
 	
 	ShootTheBrusselSprout() {
