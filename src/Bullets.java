@@ -9,8 +9,8 @@ public class Bullets extends GameObject {
 	public static boolean needImageBullet = true;
 	public static boolean gotImageBullet = false;
 	
-	Bullets(int x, int y, int width, int height) {
-		super(x, y, width, height);
+	Bullets(double x, double y, double width, double height) {
+		super((int)x, (int)y, (int)width, (int)height);
 		speed = 15;
 		if (needImageBullet) {
 			loadBullet("bullet.png");
@@ -26,10 +26,10 @@ public class Bullets extends GameObject {
 		
 		
 		if (gotImageBullet) {
-			g.drawImage(bullet, x, y, width, height, null);
+			g.drawImage(bullet, (int)x, (int)y, width, height, null);
 		} else {
 			g.setColor(Color.BLUE);
-			g.fillRect(x, y, width, height);
+			g.fillRect((int)x, (int)y, width, height);
 		}
 	}
 	

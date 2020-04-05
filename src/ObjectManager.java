@@ -19,14 +19,22 @@ public class ObjectManager implements ActionListener {
 	}
 
 	void addSprout() {
-		sprouts.add(new BrusselSprouts(random.nextInt(ShootTheBrusselSprout.WIDTH), 0, 125, 125));
-		System.out.println("bob");
+		if (BrusselSprouts.whichSprout == 3) {
+			sprouts.add(new BrusselSprouts(random.nextInt(ShootTheBrusselSprout.WIDTH), 0, 125, 125));
+		}
+		if (BrusselSprouts.whichSprout == 1) {
+			sprouts.add(new BrusselSprouts(random.nextInt(ShootTheBrusselSprout.WIDTH), 0, 50, 50));
+		}
+		if (BrusselSprouts.whichSprout == 2) {
+			sprouts.add(new BrusselSprouts(random.nextInt(ShootTheBrusselSprout.WIDTH), 0, 90, 90));
+		}
+
 	}
 
 	void update() {
 		for (int i = 0; i < sprouts.size(); i++) {
 			BrusselSprouts brusselSprouts = sprouts.get(i);
-			brusselSprouts.update();
+			brusselSprouts.update(0.1f);
 			checkCollision();
 			purgeObjects();
 
@@ -58,9 +66,10 @@ public class ObjectManager implements ActionListener {
 
 		}
 	}
+
 	void checkCollision() {
 		for (BrusselSprouts sprout : sprouts) {
-			
+
 			if (launcher.collisionBox.intersects(sprout.collisionBox)) {
 				launcher.isActive = false;
 				sprout.isActive = false;
@@ -72,17 +81,17 @@ public class ObjectManager implements ActionListener {
 		for (Bullets bullet : bullets) {
 
 			for (BrusselSprouts sprout : sprouts) {
-				
+
 				if (bullet.collisionBox.intersects(sprout.collisionBox)) {
 					sprout.isActive = false;
 					bullet.isActive = false;
-					
 
 				}
 			}
 		}
 
 	}
+
 	void purgeObjects() {
 		for (int i = 0; i < sprouts.size(); i++) {
 			BrusselSprouts sprout = sprouts.get(i);

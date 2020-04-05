@@ -22,10 +22,10 @@ public class Launcher extends GameObject{
 
 	void draw(Graphics g) {
 		if (gotImageLauncher) {
-			g.drawImage(launcher, x, y, width, height, null);
+			g.drawImage(launcher, (int)x, (int)y, width, height, null);
 		} else {
 			g.setColor(Color.BLUE);
-			g.fillRect(x, y, width, height);
+			g.fillRect((int)x, (int)y, width, height);
 		}
 	}
 	
@@ -51,7 +51,7 @@ public class Launcher extends GameObject{
 	    }
 	}
 	public Bullets getBullet() {
-        return new Bullets(x+width/3, y, 30, 30);
+        return new Bullets(x+width/2.7, y, 30, 30);
 } 
 }
 	

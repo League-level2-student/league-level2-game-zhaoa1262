@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	public static BufferedImage background;
 
-	Launcher launcher = new Launcher(300, 400, 125, 225);
+	Launcher launcher = new Launcher(300, 400, 100, 150);
 	ObjectManager objectManager = new ObjectManager(launcher);
 
 	Timer sproutSpawn;
