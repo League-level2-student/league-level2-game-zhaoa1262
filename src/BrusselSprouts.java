@@ -10,10 +10,11 @@ public class BrusselSprouts extends GameObject {
 	public static boolean needImageSprout = true;
 	public static boolean gotImageSprout = false;
 	
-	static int whichSprout = 2;
-	float gravity = 2f;
-	float velocityX = 8f;
-	float velocityY = 1f;
+	static int whichSprout = 3;
+	float gravity = 1f;
+	float velocityX = 4f;
+	float velocityY = 4f;
+	
 	
 	BrusselSprouts(double x, double y, int width, int height) {
 		super(x, y, width, height);
@@ -24,17 +25,20 @@ public class BrusselSprouts extends GameObject {
 
 	void update(float time) {
 		super.update();
-		/*y += speed;
-		if (y >= 500 || y <= 0) {
-			speed = -speed;
-			if (y <= 75) {
-				speed = speed;
-			}
-		}
-		*/
 		velocityY += gravity * time;        
 	    x += velocityX * time;      
-	    y += velocityY * time; 
+	    y += velocityY * time;
+	
+		
+		if (y >= 500 ) {
+			velocityY=-velocityY;
+			
+		}
+		
+		
+			
+			
+	    
 
 	}
 

@@ -83,7 +83,9 @@ public class ObjectManager implements ActionListener {
 			for (BrusselSprouts sprout : sprouts) {
 
 				if (bullet.collisionBox.intersects(sprout.collisionBox)) {
-					sprout.isActive = false;
+					
+						sprout.isActive = false;
+					
 					bullet.isActive = false;
 
 				}
