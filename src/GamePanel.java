@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -132,6 +133,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				if (currentState == GAME) {
 					startGame();
 				}
+			}
+			
+			if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+				JOptionPane.showMessageDialog(null, "Use the left and right arrow keys to move. Use the space "
+						+ "bar to shoot. Press enter to begin the game.");
 			}
 			
 

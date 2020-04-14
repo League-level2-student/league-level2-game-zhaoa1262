@@ -6,21 +6,34 @@ import javax.imageio.ImageIO;
 
 public class BrusselSprouts extends GameObject {
 
-	public static BufferedImage sprout;
-	public static boolean needImageSprout = true;
-	public static boolean gotImageSprout = false;
+	public  BufferedImage sprout;
+	public   boolean needImageSprout = true;
+	public   boolean gotImageSprout = false;
 	
-	static int whichSprout = 3;
+	int whichSprout = 1;
 	float gravity = 1f;
 	float velocityX = 4f;
 	float velocityY = 4f;
 	
 	
-	BrusselSprouts(double x, double y, int width, int height) {
+	BrusselSprouts(double x, double y, int width, int height, int whichSprout) {
 		super(x, y, width, height);
 		// TODO Auto-generated constructor stub
 		speed=2;
+		this.whichSprout = whichSprout;
 		pickSprout(whichSprout);
+		
+	}
+	BrusselSprouts(double x, double y, int width, int height, int whichSprout, float velocityX) {
+		super(x, y, width, height);
+		// TODO Auto-generated constructor stub
+		speed=2;
+		this.whichSprout = whichSprout;
+		this.velocityX = -velocityX;
+		 
+		
+		pickSprout(whichSprout);
+		
 	}
 
 	void update(float time) {
@@ -33,6 +46,9 @@ public class BrusselSprouts extends GameObject {
 		if (y >= 500 ) {
 			velocityY=-velocityY;
 			
+		}
+		if( x >= 700) {
+			 velocityX= -velocityX;   
 		}
 		
 		

@@ -9,6 +9,7 @@ public class ObjectManager implements ActionListener {
 	ArrayList<Bullets> bullets = new ArrayList<Bullets>();
 	ArrayList<BrusselSprouts> sprouts = new ArrayList<BrusselSprouts>();
 	Random random = new Random();
+	
 
 	ObjectManager(Launcher launcher) {
 		this.launcher = launcher;
@@ -18,15 +19,16 @@ public class ObjectManager implements ActionListener {
 		bullets.add(object);
 	}
 
-	void addSprout() {
-		if (BrusselSprouts.whichSprout == 3) {
-			sprouts.add(new BrusselSprouts(random.nextInt(ShootTheBrusselSprout.WIDTH), 0, 125, 125));
+	void addSprout(int whichSprout) {
+		
+		if ( whichSprout == 3) {
+			sprouts.add(new BrusselSprouts(random.nextInt(ShootTheBrusselSprout.WIDTH-150), 0, 125, 125, 3));
 		}
-		if (BrusselSprouts.whichSprout == 1) {
-			sprouts.add(new BrusselSprouts(random.nextInt(ShootTheBrusselSprout.WIDTH), 0, 50, 50));
+		if ( whichSprout == 1) {
+			sprouts.add(new BrusselSprouts(random.nextInt(ShootTheBrusselSprout.WIDTH-150), 0, 50, 50, 1));
 		}
-		if (BrusselSprouts.whichSprout == 2) {
-			sprouts.add(new BrusselSprouts(random.nextInt(ShootTheBrusselSprout.WIDTH), 0, 90, 90));
+		if ( whichSprout == 2) {
+			sprouts.add(new BrusselSprouts(random.nextInt(ShootTheBrusselSprout.WIDTH-150), 0, 90, 90, 2));
 		}
 
 	}
@@ -80,11 +82,20 @@ public class ObjectManager implements ActionListener {
 
 		for (Bullets bullet : bullets) {
 
-			for (BrusselSprouts sprout : sprouts) {
+			for (int sprout = 0; sprout< sprouts.size(); sprout++) {
+				
 
-				if (bullet.collisionBox.intersects(sprout.collisionBox)) {
+				if (bullet.collisionBox.intersects(sprouts.get(sprout).collisionBox)) {
+					if(sprouts.get(sprout).whichSprout==3) {
+						sprouts.add(new BrusselSprouts(sprouts.get(sprout).x+50, sprouts.get(sprout).y, 90, 90, 2));
+						sprouts.add(new BrusselSprouts(sprouts.get(sprout).x-50, sprouts.get(sprout).y, 90, 90, 2, sprouts.get(sprout).velocityX ));
+					}
+					else if(sprouts.get(sprout).whichSprout==2) {
+						sprouts.add(new BrusselSprouts(sprouts.get(sprout).x+50, sprouts.get(sprout).y, 50, 50, 1));
+						sprouts.add(new BrusselSprouts(sprouts.get(sprout).x-50, sprouts.get(sprout).y, 50, 50, 1, sprouts.get(sprout).velocityX));
+					}
 					
-						sprout.isActive = false;
+					sprouts.get(sprout).isActive = false;
 					
 					bullet.isActive = false;
 
@@ -112,7 +123,8 @@ public class ObjectManager implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		addSprout();
+		Random random = new Random();
+		addSprout(random.nextInt(3)+1);
 	}
 
 }
