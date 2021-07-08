@@ -11,7 +11,7 @@ public class BrusselSprouts extends GameObject {
 	public   boolean gotImageSprout = false;
 	
 	int whichSprout = 1;
-	float gravity = 1f;
+	float gravity = 1.5f;
 	float velocityX = 4f;
 	float velocityY = 4f;
 	
